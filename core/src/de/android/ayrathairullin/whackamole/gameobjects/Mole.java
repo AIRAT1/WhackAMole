@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Mole {
     public Sprite moleSprite;
     public Vector2 position = new Vector2();
-    public float height, width;
+    public float height, width, scaleFactor;
 
     public void render(SpriteBatch batch) {
         moleSprite.draw(batch);
