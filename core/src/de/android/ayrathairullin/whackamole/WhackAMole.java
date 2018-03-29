@@ -30,4 +30,9 @@ public class WhackAMole extends ApplicationAdapter {
 		batch.dispose();
 		img.dispose();
 	}
+
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+	}
 }
