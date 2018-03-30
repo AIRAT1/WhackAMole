@@ -1,16 +1,18 @@
 package de.android.ayrathairullin.whackamole.gameobjects;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Mole {
-    public enum State {GOINGUP, GOINGDOWN};
+    public enum State {GOINGUP, GOINGDOWN, UNDERGROUND};
 
     public State state = State.GOINGUP;
     public float currentHeight = 0.0f;
     public float speed = 2.0f;
+    public float timeUnderground = 0.0f, maxTimeUnderground = .8f;
 
     public Sprite moleSprite;
     public Vector2 position = new Vector2();
@@ -22,6 +24,14 @@ public class Mole {
 
     public void update() {
         switch (state) {
+            case UNDERGROUND:
+                if (timeUnderground >= maxTimeUnderground) {
+                    state = State.GOINGUP;
+                    timeUnderground = 0.0f;
+                }else {
+                    timeUnderground += Gdx.graphics.getDeltaTime();
+                }
+                break;
             case GOINGUP:
                 currentHeight += speed;
                 if (currentHeight >= height) {
@@ -33,7 +43,7 @@ public class Mole {
                 currentHeight -= speed;
                 if (currentHeight <= 0.0) {
                     currentHeight = 0.0f;
-                    state = State.GOINGUP;
+                    state = State.UNDERGROUND;
                 }
                 break;
         }
