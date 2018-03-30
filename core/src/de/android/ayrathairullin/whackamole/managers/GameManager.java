@@ -22,6 +22,7 @@ public class GameManager {
     static Texture backgroundTexture; // texture image for background
     static Sprite backgroundSprite; // sprite for background
     static Texture holeTexture; // texture image for background
+    static Texture stunTexture;
     static Array<Sprite> holeSprites; // array of hole sprites
 
     public static void initialize(float width,float height){
@@ -31,6 +32,7 @@ public class GameManager {
             moles.add(new Mole());
         }
 
+        stunTexture = new Texture(Gdx.files.internal("data/stun.png"));
         backgroundTexture = new Texture(Gdx.files.internal("data/ground.jpg"));
         backgroundSprite = new Sprite(backgroundTexture); //set background sprite
         backgroundSprite.setSize(width, height);
@@ -53,6 +55,7 @@ public class GameManager {
             Mole mole = moles.get(i);
             Sprite sprite = holeSprites.get(i);
             mole.moleSprite = new Sprite(moleTexture);
+            mole.stunSprite = new Sprite(stunTexture);
             float scaleFactor = width / 4000f;
             mole.scaleFactor = scaleFactor;
             mole.width = mole.moleSprite.getWidth() * (scaleFactor);
@@ -63,6 +66,7 @@ public class GameManager {
             mole.position.y = (sprite.getY() + sprite.getHeight() / 5f);
 
             mole.moleSprite.setPosition(mole.position.x, mole.position.y);
+            mole.stunSprite.setSize(mole.width / 2f, mole.height / 2f);
             mole.randomizeWaitTime();
         }
     }
@@ -82,5 +86,6 @@ public class GameManager {
         backgroundTexture.dispose();
         holeTexture.dispose();
         moleTexture.dispose();
+        stunTexture.dispose();
     }
 }

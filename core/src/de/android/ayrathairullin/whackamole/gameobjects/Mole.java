@@ -7,19 +7,24 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Mole {
-    public enum State {GOINGUP, GOINGDOWN, UNDERGROUND};
+    public enum State {GOINGUP, GOINGDOWN, UNDERGROUND, STUNNED}
 
     public State state = State.GOINGUP;
     public float currentHeight = 0.0f;
     public float speed = 2.0f;
     public float timeUnderground = 0.0f, maxTimeUnderground = .8f;
 
-    public Sprite moleSprite;
+    public Sprite moleSprite, stunSprite;
     public Vector2 position = new Vector2();
     public float height, width, scaleFactor;
+    public float stunTime = .3f; // TODO change value from standard 0.1f
+    public float stunCounter = 0.0f;
 
     public void render(SpriteBatch batch) {
         moleSprite.draw(batch);
+        if (state == State.STUNNED) {
+            stunSprite.draw(batch);
+        }
     }
 
     public void update() {
@@ -46,6 +51,16 @@ public class Mole {
                     state = State.UNDERGROUND;
                 }
                 break;
+            case STUNNED:
+                if (stunCounter >= stunTime) {
+                    state = State.UNDERGROUND;
+                    stunCounter = 0.0f;
+                    currentHeight = 0.0f;
+                    randomizeWaitTime();
+                }else {
+                    stunCounter += Gdx.graphics.getDeltaTime();
+                }
+                break;
         }
         moleSprite.setRegion(0, 0, (int) (width / scaleFactor), (int)(currentHeight / scaleFactor));
         moleSprite.setSize(moleSprite.getWidth(), currentHeight);
@@ -58,12 +73,16 @@ public class Mole {
     public boolean handleTouch(float touchX, float touchY) {
         if ((touchX >= position.x) && touchX <= (position.x + width) &&
                 (touchY >= position.y) && touchY <= (position.y + currentHeight)) {
-            state = State.UNDERGROUND;
-            currentHeight = 0.0f;
-            moleSprite.setRegion(0, 0, (int)(width / scaleFactor), (int)(currentHeight / scaleFactor));
-            moleSprite.setSize(moleSprite.getWidth(), currentHeight);
-            timeUnderground = 0.0f;
-            randomizeWaitTime();
+            stunSprite.setPosition(position.x + width - (stunSprite.getWidth() / 2),
+                    position.y + currentHeight - (stunSprite.getHeight() / 2));
+            state = State.STUNNED;
+
+//            state = State.UNDERGROUND;
+//            currentHeight = 0.0f;
+//            moleSprite.setRegion(0, 0, (int)(width / scaleFactor), (int)(currentHeight / scaleFactor));
+//            moleSprite.setSize(moleSprite.getWidth(), currentHeight);
+//            timeUnderground = 0.0f;
+//            randomizeWaitTime();
             return true;
         }
         return false;
