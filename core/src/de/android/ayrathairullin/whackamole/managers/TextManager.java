@@ -15,11 +15,12 @@ public class TextManager {
         TextManager.width = width;
         TextManager.height = height;
         font.setColor(Color.RED);
-        font.getData().setScale(width / 400f);
+        font.getData().setScale(width / 400f); // TODO original value was 1600f
     }
 
     public static void displayMessage(SpriteBatch batch) {
         float fontWidth = new GlyphLayout(font, "Score: " + GameManager.score).width;
         font.draw(batch, "Score: " + GameManager.score, width - fontWidth - width / 15f, height * .95f);
+        font.draw(batch, (int)GameManager.time + " sek", width / 15f, height * .95f);
     }
 }

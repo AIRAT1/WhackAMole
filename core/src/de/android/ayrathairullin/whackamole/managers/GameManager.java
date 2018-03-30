@@ -26,10 +26,12 @@ public class GameManager {
     static Texture stunTexture;
     static Array<Sprite> holeSprites; // array of hole sprites
     public static int score;
+    public static float time;
     public static Sound hitSound;
 
     public static void initialize(float width,float height){
         score = 0;
+        time = 60.0f;
         TextManager.initialize(width, height);
         hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/hit.wav"));
         moles = new Array<Mole>();
@@ -88,6 +90,12 @@ public class GameManager {
             mole.render(batch);
         }
         TextManager.displayMessage(batch);
+        GameManager.time -= Gdx.graphics.getDeltaTime();
+        if (GameManager.time <= 0) {
+            // TODO GAME OVER
+            // GameManager.time = 60.0f;
+            // Gdx.app.exit();
+        }
     }
     public static void dispose() {
         backgroundTexture.dispose();
