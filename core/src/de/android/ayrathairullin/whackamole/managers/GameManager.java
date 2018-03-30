@@ -73,6 +73,7 @@ public class GameManager {
             sprite.draw(batch);
 
         for(Mole mole : moles){
+            mole.update();
             mole.render(batch);
         }
     }

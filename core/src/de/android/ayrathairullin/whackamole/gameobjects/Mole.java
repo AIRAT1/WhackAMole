@@ -6,11 +6,38 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 public class Mole {
+    public enum State {GOINGUP, GOINGDOWN};
+
+    public State state = State.GOINGUP;
+    public float currentHeight = 0.0f;
+    public float speed = 2.0f;
+
     public Sprite moleSprite;
     public Vector2 position = new Vector2();
     public float height, width, scaleFactor;
 
     public void render(SpriteBatch batch) {
         moleSprite.draw(batch);
+    }
+
+    public void update() {
+        switch (state) {
+            case GOINGUP:
+                currentHeight += speed;
+                if (currentHeight >= height) {
+                    currentHeight = height;
+                    state = State.GOINGDOWN;
+                }
+                break;
+            case GOINGDOWN:
+                currentHeight -= speed;
+                if (currentHeight <= 0.0) {
+                    currentHeight = 0.0f;
+                    state = State.GOINGUP;
+                }
+                break;
+        }
+        moleSprite.setRegion(0, 0, (int) (width / scaleFactor), (int)(currentHeight / scaleFactor));
+        moleSprite.setSize(moleSprite.getWidth(), currentHeight);
     }
 }
