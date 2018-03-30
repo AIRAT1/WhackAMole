@@ -50,4 +50,22 @@ public class Mole {
         moleSprite.setRegion(0, 0, (int) (width / scaleFactor), (int)(currentHeight / scaleFactor));
         moleSprite.setSize(moleSprite.getWidth(), currentHeight);
     }
+
+    public void randomizeWaitTime() {
+        maxTimeUnderground = (float)Math.random() * 2f;
+    }
+
+    public boolean handleTouch(float touchX, float touchY) {
+        if ((touchX >= position.x) && touchX <= (position.x + width) &&
+                (touchY >= position.y) && touchY <= (position.y + currentHeight)) {
+            state = State.UNDERGROUND;
+            currentHeight = 0.0f;
+            moleSprite.setRegion(0, 0, (int)(width / scaleFactor), (int)(currentHeight / scaleFactor));
+            moleSprite.setSize(moleSprite.getWidth(), currentHeight);
+            timeUnderground = 0.0f;
+            randomizeWaitTime();
+            return true;
+        }
+        return false;
+    }
 }

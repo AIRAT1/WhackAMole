@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import de.android.ayrathairullin.whackamole.managers.GameManager;
+import de.android.ayrathairullin.whackamole.managers.InputManager;
 
 public class WhackAMole extends ApplicationAdapter {
 	private SpriteBatch batch;
@@ -26,6 +27,7 @@ public class WhackAMole extends ApplicationAdapter {
 	public void render () {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		InputManager.handleInput(camera);
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		GameManager.renderGame(batch);

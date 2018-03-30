@@ -63,6 +63,7 @@ public class GameManager {
             mole.position.y = (sprite.getY() + sprite.getHeight() / 5f);
 
             mole.moleSprite.setPosition(mole.position.x, mole.position.y);
+            mole.randomizeWaitTime();
         }
     }
 
