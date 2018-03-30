@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+import de.android.ayrathairullin.whackamole.managers.GameManager;
+
 public class Mole {
     public enum State {GOINGUP, GOINGDOWN, UNDERGROUND, STUNNED}
 
@@ -76,6 +78,7 @@ public class Mole {
             stunSprite.setPosition(position.x + width - (stunSprite.getWidth() / 2),
                     position.y + currentHeight - (stunSprite.getHeight() / 2));
             state = State.STUNNED;
+            GameManager.hitSound.play(.5f);
 
 //            state = State.UNDERGROUND;
 //            currentHeight = 0.0f;

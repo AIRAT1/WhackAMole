@@ -2,6 +2,7 @@ package de.android.ayrathairullin.whackamole.managers;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,8 +25,13 @@ public class GameManager {
     static Texture holeTexture; // texture image for background
     static Texture stunTexture;
     static Array<Sprite> holeSprites; // array of hole sprites
+    public static int score;
+    public static Sound hitSound;
 
     public static void initialize(float width,float height){
+        score = 0;
+        TextManager.initialize(width, height);
+        hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/hit.wav"));
         moles = new Array<Mole>();
         moleTexture = new Texture(Gdx.files.internal("data/mole.png"));
         for(int i=0;i<9;i++){
@@ -81,11 +87,13 @@ public class GameManager {
             mole.update();
             mole.render(batch);
         }
+        TextManager.displayMessage(batch);
     }
     public static void dispose() {
         backgroundTexture.dispose();
         holeTexture.dispose();
         moleTexture.dispose();
         stunTexture.dispose();
+        hitSound.dispose();
     }
 }

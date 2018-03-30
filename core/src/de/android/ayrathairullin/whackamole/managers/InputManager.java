@@ -18,7 +18,8 @@ public class InputManager {
 
             for (int i = 0; i < GameManager.moles.size; i++) {
                 Mole mole = GameManager.moles.get(i);
-                if (mole.state != mole.state.STUNNED && mole.handleTouch(touchX, touchY)) {
+                if (mole.state != Mole.State.STUNNED && mole.handleTouch(touchX, touchY)) {
+                    GameManager.score ++;
                     break;
                 }
             }
