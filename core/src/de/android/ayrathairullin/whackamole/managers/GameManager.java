@@ -99,9 +99,6 @@ public class GameManager {
             GameManager.highScore = GameManager.score;
         }
 
-        prefs.putInteger("highScoreMole", highScore);
-        prefs.flush();
-
         TextManager.displayMessage(batch);
     }
     public static void dispose() {
@@ -110,5 +107,8 @@ public class GameManager {
         moleTexture.dispose();
         stunTexture.dispose();
         hitSound.dispose();
+
+        prefs.putInteger("highScoreMole", highScore);
+        prefs.flush();
     }
 }
