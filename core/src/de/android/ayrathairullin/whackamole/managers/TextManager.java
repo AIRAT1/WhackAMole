@@ -21,6 +21,6 @@ public class TextManager {
     public static void displayMessage(SpriteBatch batch) {
         float fontWidth = new GlyphLayout(font, "Score: " + GameManager.score).width;
         font.draw(batch, "Score: " + GameManager.score, width - fontWidth - width / 15f, height * .95f);
-        font.draw(batch, (int)GameManager.time + " sek", width / 15f, height * .95f);
+        font.draw(batch, "High Score: " + GameManager.highScore, width / 15f, height * .95f);
     }
 }

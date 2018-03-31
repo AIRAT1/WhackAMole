@@ -2,6 +2,7 @@ package de.android.ayrathairullin.whackamole.managers;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -25,13 +26,17 @@ public class GameManager {
     static Texture holeTexture; // texture image for background
     static Texture stunTexture;
     static Array<Sprite> holeSprites; // array of hole sprites
-    public static int score;
-    public static float time;
+    public static int score = 0;
+    public static int highScore;
     public static Sound hitSound;
+    static Preferences prefs;
 
     public static void initialize(float width,float height){
         score = 0;
-        time = 60.0f;
+
+        prefs = Gdx.app.getPreferences("My Preferences");
+        highScore = prefs.getInteger("highScoreMole");
+
         TextManager.initialize(width, height);
         hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/hit.wav"));
         moles = new Array<Mole>();
@@ -89,13 +94,14 @@ public class GameManager {
             mole.update();
             mole.render(batch);
         }
-        TextManager.displayMessage(batch);
-        GameManager.time -= Gdx.graphics.getDeltaTime();
-        if (GameManager.time <= 0) {
-            // TODO GAME OVER
-            // GameManager.time = 60.0f;
-            // Gdx.app.exit();
+
+        if (GameManager.score > GameManager.highScore) {
+            GameManager.highScore = GameManager.score;
         }
+        prefs.putInteger("highScoreMole", score);
+        prefs.flush();
+
+        TextManager.displayMessage(batch);
     }
     public static void dispose() {
         backgroundTexture.dispose();
