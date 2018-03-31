@@ -13,13 +13,13 @@ public class Mole {
 
     public State state = State.GOINGUP;
     public float currentHeight = 0.0f;
-    public float speed = 2.0f;
+    public float speed = 4.0f; // TODO change standard value 2.0f
     public float timeUnderground = 0.0f, maxTimeUnderground = .8f;
 
     public Sprite moleSprite, stunSprite;
     public Vector2 position = new Vector2();
     public float height, width, scaleFactor;
-    public float stunTime = .3f; // TODO change value from standard 0.1f
+    public float stunTime = .1f;
     public float stunCounter = 0.0f;
 
     public void render(SpriteBatch batch) {
