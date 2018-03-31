@@ -15,13 +15,18 @@ public class InputManager {
             camera.unproject(temp);
             float touchX = temp.x;
             float touchY = temp.y;
+            boolean success = false;
 
             for (int i = 0; i < GameManager.moles.size; i++) {
                 Mole mole = GameManager.moles.get(i);
                 if (mole.state != Mole.State.STUNNED && mole.handleTouch(touchX, touchY)) {
                     GameManager.score ++;
+                    success = true;
                     break;
                 }
+            }
+            if (!success) {
+                GameManager.score--;
             }
         }
     }
