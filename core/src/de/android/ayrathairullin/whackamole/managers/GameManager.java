@@ -34,7 +34,7 @@ public class GameManager {
     public static void initialize(float width,float height){
         score = 0;
 
-        prefs = Gdx.app.getPreferences("My Preferences");
+        prefs = Gdx.app.getPreferences("WhackAMolePreferences");
         highScore = prefs.getInteger("highScoreMole");
 
         TextManager.initialize(width, height);
@@ -95,11 +95,11 @@ public class GameManager {
             mole.render(batch);
         }
 
-
         if (GameManager.score > GameManager.highScore) {
             GameManager.highScore = GameManager.score;
         }
-        prefs.putInteger("highScoreMole", score);
+
+        prefs.putInteger("highScoreMole", highScore);
         prefs.flush();
 
         TextManager.displayMessage(batch);
