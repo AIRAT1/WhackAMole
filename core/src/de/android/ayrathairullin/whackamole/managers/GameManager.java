@@ -95,6 +95,7 @@ public class GameManager {
             mole.render(batch);
         }
 
+
         if (GameManager.score > GameManager.highScore) {
             GameManager.highScore = GameManager.score;
         }
